@@ -4,5 +4,5 @@
     <string name="generate">Generate!</string>
     <string name="generate_dogs">Generate dogs!</string>
     <string name="random_dog_generator">Random Dog Generator!</string>
-    <string name="my_recent_generated_dogs">My recent generated dogs!</string>
+    <string name="my_recent_generated_dogs">My recently generated dogs!</string>
 </resources>

@@ -40,6 +40,9 @@
         android:text="@string/clear_dogs"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:foreground="@drawable/ripple_effect"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
