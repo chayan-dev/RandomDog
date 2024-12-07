@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -40,6 +41,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil3.compose.AsyncImage
 import com.bumptech.glide.Glide
 import com.example.randomdog.R
+import com.example.randomdog.api.RandomDogResponse
 import com.example.randomdog.databinding.ActivityGenerateBinding
 import com.example.randomdog.ui.viewModels.DogsViewModel
 import com.example.randomdog.utils.Resource
@@ -53,22 +55,25 @@ class GenerateActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityGenerateBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[DogsViewModel::class.java]
         setToolbar()
         binding.composeView.setContent {
             MaterialTheme{
-                GenerateDog(viewModel)
+                Surface {
+                    GenerateDog(viewModel)
+                    GenerateButton()
+                }
+
             }
         }
-        viewModel.getRandomDog()
+//        viewModel.getRandomDog()
     }
 
     @Composable
     fun GenerateDog(viewModel: DogsViewModel){
-        val response = viewModel.randomDog.observeAsState(initial = Resource.Loading())
+        val response = viewModel.randomDog.observeAsState(initial = Resource.Success(RandomDogResponse("","")))
         when(response.value){
             is Resource.Success -> {
                 ProgressBar(isVisible = false)
@@ -78,7 +83,7 @@ class GenerateActivity: AppCompatActivity() {
             }
             is Resource.Error -> {
                 ProgressBar(isVisible = false)
-                Toast.makeText(this,"Some error has occurred", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,stringResource(id = R.string.error), Toast.LENGTH_SHORT).show()
             }
             is Resource.Loading -> {
                 ProgressBar(isVisible = true)
@@ -88,7 +93,6 @@ class GenerateActivity: AppCompatActivity() {
 
     @Composable
     fun GenerateDogUI(url: String){
-        Surface {
             Column (
                 Modifier.width(IntrinsicSize.Max),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -103,23 +107,38 @@ class GenerateActivity: AppCompatActivity() {
                         .padding(32.dp) ,
                     contentScale = ContentScale.Fit,
                     )
-                Button(
-                    onClick = { viewModel.getRandomDog()},
-                    shape = RoundedCornerShape(12.dp),
-                    border = BorderStroke(1.dp, Color.Black),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color(ContextCompat.getColor(this@GenerateActivity, R.color.blue)),
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .padding(top = 32.dp)
-                        .height(32.dp)
-                ) {
-                    Text(text = "Generate!")
 
-                }
             }
 
+    }
+
+    @Composable
+    fun GenerateButton(){
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 30.dp)
+        ) {
+            Button(
+                onClick = { viewModel.getRandomDog() },
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color(
+                        ContextCompat.getColor(
+                            this@GenerateActivity,
+                            R.color.blue
+                        )
+                    ),
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .padding(bottom = 150.dp)
+                    .height(32.dp)
+                    .align(Alignment.BottomCenter)
+            ) {
+                Text(text = stringResource(id = R.string.generate))
+            }
         }
     }
 
@@ -128,7 +147,6 @@ class GenerateActivity: AppCompatActivity() {
         isVisible: Boolean,
         modifier: Modifier = Modifier
     ) {
-        Log.d("progress_is", isVisible.toString())
         if (isVisible) {
             Box(
                 contentAlignment = Alignment.Center,
