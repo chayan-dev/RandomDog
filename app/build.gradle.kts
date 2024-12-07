@@ -38,6 +38,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
 
@@ -85,4 +89,14 @@ dependencies {
     //Dagger for dependency injection
     implementation("com.google.dagger:hilt-android:2.51")
     kapt("com.google.dagger:hilt-compiler:2.51")
+
+    implementation ("androidx.compose.material:material:1.2.0")
+    implementation ("androidx.compose.ui:ui:1.2.0")
+    implementation ("androidx.activity:activity-compose:1.2.0")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.2.0")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.2.0")
+
+
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 }
