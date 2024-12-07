@@ -14,7 +14,7 @@ import com.example.randomdog.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GenerateActivity: AppCompatActivity() {
+class GenerateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGenerateBinding
     private lateinit var viewModel: DogsViewModel
@@ -28,24 +28,25 @@ class GenerateActivity: AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[DogsViewModel::class.java]
         setObservers()
-        viewModel.getRandomDog()
+//        viewModel.getRandomDog()
         setOnClickListener()
-
     }
 
-    private fun setObservers(){
-        viewModel.randomDog.observe(this){ response ->
-            when(response){
+    private fun setObservers() {
+        viewModel.randomDog.observe(this) { response ->
+            when (response) {
                 is Resource.Success -> {
                     hideLoader()
                     response.data?.let {
                         Glide.with(this).load(it.message).into(binding.ivDog)
                     }
                 }
+
                 is Resource.Error -> {
                     hideLoader()
-                    Toast.makeText(this,"Some error has occurred", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Some error has occurred", Toast.LENGTH_SHORT).show()
                 }
+
                 is Resource.Loading -> {
                     showLoader()
                 }
@@ -53,13 +54,13 @@ class GenerateActivity: AppCompatActivity() {
         }
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         binding.btnGenerate.setOnClickListener {
             viewModel.getRandomDog()
         }
     }
 
-    private fun setToolbar(){
+    private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(

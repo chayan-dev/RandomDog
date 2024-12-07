@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setOnClickedListener()
     }
 
-    private fun setOnClickedListener(){
+    private fun setOnClickedListener() {
         binding.btnGenerate.setOnClickListener {
             startActivity(Intent(this, GenerateActivity::class.java))
         }

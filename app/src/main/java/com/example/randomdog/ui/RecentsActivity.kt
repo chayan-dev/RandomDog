@@ -10,11 +10,11 @@ import com.example.randomdog.ui.viewModels.RecentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecentsActivity: AppCompatActivity() {
+class RecentsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecentsBinding
     private lateinit var viewModel: RecentViewModel
-    lateinit var adapter: DogAdapter
+    private lateinit var adapter: DogAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,23 +27,22 @@ class RecentsActivity: AppCompatActivity() {
         setObservers()
         viewModel.getAllRecentDogs()
         setOnClickListener()
-
     }
 
-    private fun setObservers(){
-        viewModel.allRecentDogs.observe(this){ list ->
+    private fun setObservers() {
+        viewModel.allRecentDogs.observe(this) { list ->
             adapter.setDogs(list)
         }
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         binding.btnClear.setOnClickListener {
             viewModel.deleteAllRecentDogs()
         }
 
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
         adapter = DogAdapter()
         binding.rcyRecent.adapter = adapter
     }
@@ -53,7 +52,7 @@ class RecentsActivity: AppCompatActivity() {
         return true
     }
 
-    private fun setToolbar(){
+    private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(
