@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DogsViewModel @Inject constructor(
     private val repository: DogsRepository
-): ViewModel() {
+) : ViewModel() {
 
     val randomDog: MutableLiveData<Resource<RandomDogResponse>> = MutableLiveData()
 
@@ -25,24 +25,24 @@ class DogsViewModel @Inject constructor(
     {
         randomDog.postValue(Resource.Loading())
         val response = repository.getRandomDog()
-        if (response.isSuccessful && response.body()?.status == SUCCESS){
+        if (response.isSuccessful && response.body()?.status == SUCCESS) {
             response.body()?.let {
                 randomDog.postValue(Resource.Success(it))
             }
             response.body()?.let { dog ->
                 insertDog(dog)
             }
-        }
-        else randomDog.postValue(Resource.Error(response.message()))
+        } else randomDog.postValue(Resource.Error(response.message()))
     }
 
-    private suspend fun insertDog(dogResponse: RandomDogResponse) = viewModelScope.launch(Dispatchers.IO){
-        if(repository.getCount() == CACHE_SIZE){
-            repository.deleteOldestRecord()
+    private suspend fun insertDog(dogResponse: RandomDogResponse) =
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.getCount() == CACHE_SIZE) {
+                repository.deleteOldestRecord()
+            }
+            repository.insertDog(
+                Dog(url = dogResponse.message)
+            )
         }
-        repository.insertDog(
-            Dog(url = dogResponse.message)
-        )
-    }
 
 }

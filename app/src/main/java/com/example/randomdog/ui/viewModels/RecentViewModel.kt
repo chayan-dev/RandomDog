@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecentViewModel @Inject constructor(
     private val repository: DogsRepository
-): ViewModel() {
+) : ViewModel() {
 
     val allRecentDogs: MutableLiveData<List<Dog>> = MutableLiveData()
 

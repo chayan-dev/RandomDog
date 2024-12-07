@@ -39,7 +39,6 @@ class RecentsActivity : AppCompatActivity() {
         binding.btnClear.setOnClickListener {
             viewModel.deleteAllRecentDogs()
         }
-
     }
 
     private fun initAdapter() {

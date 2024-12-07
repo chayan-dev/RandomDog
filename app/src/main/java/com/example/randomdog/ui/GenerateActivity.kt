@@ -28,7 +28,6 @@ class GenerateActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[DogsViewModel::class.java]
         setObservers()
-//        viewModel.getRandomDog()
         setOnClickListener()
     }
 
