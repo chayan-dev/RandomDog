@@ -78,13 +78,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .padding(top = 200.dp)
                         .background(
-                            color = colorResource(id = R.color.blue), // Replace with your `background_button` color
+                            color = colorResource(id = R.color.blue),
                             shape = RoundedCornerShape(12.dp)
                         )
                         .border(
                             width = 1.dp,
-                            color = Color.Black, // Border color
-                            shape = RoundedCornerShape(12.dp) // Same shape as background
+                            color = Color.Black,
+                            shape = RoundedCornerShape(12.dp)
                         )
                         .clickable { onGenerateClick() }
                         .padding(vertical = 6.dp, horizontal = 16.dp)
@@ -97,13 +97,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .background(
-                            color = colorResource(id = R.color.blue), // Replace with your `background_button` color
+                            color = colorResource(id = R.color.blue),
                             shape = RoundedCornerShape(12.dp)
                         )
                         .border(
                             width = 1.dp,
-                            color = Color.Black, // Border color
-                            shape = RoundedCornerShape(12.dp) // Same shape as background
+                            color = Color.Black,
+                            shape = RoundedCornerShape(12.dp)
                         )
                         .clickable { onRecentClick() }
                         .padding(vertical = 6.dp, horizontal = 16.dp)

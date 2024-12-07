@@ -59,7 +59,6 @@ class GenerateActivity : AppCompatActivity() {
 
             }
         }
-//        viewModel.getRandomDog()
     }
 
     @Composable
