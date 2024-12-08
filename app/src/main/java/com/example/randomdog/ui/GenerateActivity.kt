@@ -2,8 +2,8 @@ package com.example.randomdog.ui
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,39 +27,52 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import coil3.compose.AsyncImage
 import com.example.randomdog.R
 import com.example.randomdog.api.RandomDogResponse
-import com.example.randomdog.databinding.ActivityGenerateBinding
+import com.example.randomdog.ui.resusables.ToolbarWithBackButton
 import com.example.randomdog.ui.viewModels.DogsViewModel
 import com.example.randomdog.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GenerateActivity : AppCompatActivity() {
+class GenerateActivity : ComponentActivity() {
 
-    private lateinit var binding: ActivityGenerateBinding
     private lateinit var viewModel: DogsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGenerateBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         viewModel = ViewModelProvider(this)[DogsViewModel::class.java]
-        setToolbar()
-        binding.composeView.setContent {
+        setContent {
             MaterialTheme {
-                Surface {
+                GenerateScreen()
+            }
+        }
+    }
+
+    @Composable
+    fun GenerateScreen() {
+        Scaffold(
+            topBar = {
+                ToolbarWithBackButton(title = stringResource(id = R.string.generate_dogs)) {
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            },
+            content = { padding ->
+                Surface(
+                    modifier = Modifier
+                        .padding(padding)
+                        .fillMaxWidth()
+                ) {
                     GenerateDog(viewModel)
                     GenerateButton()
                 }
-
             }
-        }
+        )
     }
 
     @Composable
@@ -123,12 +137,7 @@ class GenerateActivity : AppCompatActivity() {
                 shape = RoundedCornerShape(12.dp),
                 border = BorderStroke(1.dp, Color.Black),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(
-                        ContextCompat.getColor(
-                            this@GenerateActivity,
-                            R.color.blue
-                        )
-                    ),
+                    backgroundColor = colorResource(id = R.color.blue),
                     contentColor = Color.White
                 ),
                 modifier = Modifier
@@ -152,22 +161,9 @@ class GenerateActivity : AppCompatActivity() {
                 modifier = modifier.fillMaxSize()
             ) {
                 CircularProgressIndicator(
-                    color = Color(ContextCompat.getColor(this@GenerateActivity, R.color.blue))
+                    color = colorResource(id = R.color.blue)
                 )
             }
         }
-    }
-
-    private fun setToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(
-            AppCompatResources.getDrawable(this, R.drawable.ic_back)
-        )
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return true
     }
 }

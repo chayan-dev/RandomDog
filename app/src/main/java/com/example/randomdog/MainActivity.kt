@@ -59,8 +59,6 @@ class MainActivity : ComponentActivity() {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            val spaceBetweenItems = 24.dp
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
