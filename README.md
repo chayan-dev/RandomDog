@@ -3,4 +3,4 @@
 
 ## Walkthrough video:  [VIDEO](https://drive.google.com/file/d/1vjmIg7O-8Dki393jPd-AefPvmiw6HSbj/view?usp=sharing)
 
-## APK:  [Download](https://drive.google.com/file/d/1kqh70GlBAR93X-wklAw-Qpn3ROmqbUjg/view?usp=sharing)
+## APK:  [Download](https://1drv.ms/u/s!ApJFcexo8a6Ukibsr5OSTHU2hLJh?e=9SInDf)
